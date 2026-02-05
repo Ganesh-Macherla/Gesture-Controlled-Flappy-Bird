@@ -1,4 +1,4 @@
-# ✋Hand-Gesture Controlled Flappy Bird
+# ✋Gesture Controlled Flappy Bird
 
 A computer-vision powered Flappy Bird clone where your hand controls the bird using yout webcam...because i thought its a fun side hustle😝
 
