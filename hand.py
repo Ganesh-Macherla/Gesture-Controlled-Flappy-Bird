@@ -1,27 +1,25 @@
 import cv2
 import mediapipe as mp
-
-# Initialize MediaPipe
+# intialize mediapipe hehe
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 
-# Open webcam
+# open webcam
 cap = cv2.VideoCapture(0)
-
 while True:
     ret, frame = cap.read()
     if not ret:
         break
 
-    # Convert to RGB for MediaPipe
+
+
+    # conver to rgb for mediapipe
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = hands.process(rgb)
-
-    # Gesture detection
+    # desture detection
     if results.multi_hand_landmarks:
         for hand in results.multi_hand_landmarks:
-
             wrist = hand.landmark[0]
             y = wrist.y
 
@@ -31,18 +29,17 @@ while True:
             else:
                 text = "HAND DOWN"
                 color = (0, 0, 255)
-
-            # Draw text
+            # draw text
             cv2.putText(frame, text, (50, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
-
-            # Draw hand skeleton
+            # hand skeleton
             mp_draw.draw_landmarks(frame, hand, mp_hands.HAND_CONNECTIONS)
 
-    # Show frame
+
+    # show frame
     cv2.imshow("Hand Tracking", frame)
 
-    # Quit on Q
+    # quit
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
