@@ -1,69 +1,133 @@
-# 📊 Sorting Visualizer
+# 🐦 Gesture-Controlled Flappy Bird
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Swing](https://img.shields.io/badge/Swing-GUI-blue?style=for-the-badge)
-![Algorithms](https://img.shields.io/badge/DSA-Visualization-green?style=for-the-badge)
+![Python 3.11](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-red?style=for-the-badge&logo=opencv&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand%20Tracking-green?style=for-the-badge)
 
-An interactive sorting algorithm visualizer built in **Java Swing**. This tool demonstrates the internal mechanics of classic sorting techniques through real-time animation, step-by-step debugging, and mathematical analysis. 
+This project is an interactive, computer-vision-based reimagining of the classic Flappy Bird game.
 
-Designed as a learning aid for Data Structures and Algorithms, it allows users to pause execution, rewind states, and observe how data moves during sorting in real time.
+By integrating **MediaPipe’s hand-tracking** with a physics-based game engine, it replaces traditional keyboard inputs with real-time gesture recognition. The tool serves as a practical demonstration of how **Human-Computer Interaction (HCI)** can be applied to gaming.
 
 ---
 
 ## 🚀 Key Features
 
-* **📸 Snapshot Debugger:** Records every array state. Pause the sort and scrub through history using `← Previous` and `Next →`.
-* **🎨 Fluid Animation Engine:** High-performance `Graphics2D` rendering with anti-aliasing and rounded bar geometry.
-* **📊 Live Operation Tracking:** Real-time counters for comparisons and array swaps/moves.
-* **📖 Theory Panel:** Displays time complexity, recurrence equations, and evaluated formulas based on current array size.
-* **⏱️ Deep Time Analysis:** Estimates actual CPU execution time versus the visualized delay scale.
-* **🚦 Thread-safe Control System:** Monitor-based pause, resume, and step execution for a glitch-free experience.
+* 🖐️ Neural Gesture Mapping: Uses MediaPipe's 21-point hand landmark model to track movements with sub-millisecond latency.
+* ⚡ Real-time Control Pipeline: Processes webcam frames via OpenCV to trigger the "jump" mechanism instantly.
+* 🎮 Dynamic Physics Engine: Features simulated gravity and collision masks that respond to your physical movement.
+* 📈 Live Performance Overlay: Displays a diagnostic HUD showing hand tracking confidence and connection points.
 
 ---
 
-## 🧠 Supported Algorithms
+## 🧠 Core Technologies
 
-| Algorithm | Best Case | Average Case | Worst Case |
-| :--- | :--- | :--- | :--- |
-| **Bubble Sort** | $O(n)$ | $O(n^2)$ | $O(n^2)$ |
-| **Selection Sort** | $O(n^2)$ | $O(n^2)$ | $O(n^2)$ |
-| **Insertion Sort** | $O(n)$ | $O(n^2)$ | $O(n^2)$ |
-| **Merge Sort** | $O(n \log n)$ | $O(n \log n)$ | $O(n \log n)$ |
-| **Quick Sort** | $O(n \log n)$ | $O(n \log n)$ | $O(n^2)$ |
-| **Heap Sort** | $O(n \log n)$ | $O(n \log n)$ | $O(n \log n)$ |
-| **Shell Sort** | $O(n \log n)$ | $\sim O(n^{3/2})$ | $O(n^2)$ |
+| Component | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Vision Engine** | **OpenCV** | Frame acquisition and image processing |
+| **Tracking Model**| **MediaPipe** | 3D Hand Landmark detection |
+| **Game Logic** | **Pygame** | Sprite management and physics |
+| **Environment** | **Python 3.11** | Optimized compatibility for ML libraries |
 
 ---
 
-## 🎨 Visual Legend
+## ⚠️ Version Compatibility Note
 
-To help you understand the sorting process, the visualizer uses the following color coding:
-* **Blue:** Default/Unsorted state.
-* **Red:** Elements currently being compared.
-* **Yellow:** Elements being swapped or moved.
-* **Green:** Elements in their final sorted position.
+> **Important:** This project officially supports **Python 3.11**.
 
----
+## ❓ Why Python 3.11?
 
-## 🎮 How to Use
+As of early 2026, while Python 3.13 and 3.14 are out, many heavy-duty AI libraries like MediaPipe still recommend **3.9 to 3.11** for the most stable experience.
 
-1.  **Select an algorithm** from the dropdown menu.
-2.  **Generate a dataset** using the "Randomize" button.
-3.  **Start the sort** to watch the animation.
-4.  **Pause anytime** to enter "Debug Mode" and step backward or forward through the snapshots.
-5.  **Resume** from any specific snapshot to continue the sort from that state.
+This is because they rely on specific C++ bindings that take time to update for every new Python release.
+
+
+If you encounter a `No matching distribution found` error, please ensure you are using a Python 3.11 virtual environment.
 
 ---
 
-## ⚙️ Installation & Running
+## ⚙️ Installation
 
-### Prerequisites
-* **Java 11 or higher** installed on your system.
+### Why use a virtual environment?
 
-### Build and Run
+A virtual environment is a **private sandbox Python installation** just for this project.
+
+It prevents package conflicts and keeps your system Python clean.  
+If anything breaks, you can simply delete the environment and recreate it.
+
+---
+
+### 1. Create the environment
+
 ```bash
-# Compile the project
-javac DSAVisualizer.java
+python3.11 -m venv venv
+```
 
-# Run the application
-java DSAVisualizer
+This creates a folder named `venv` containing an isolated Python setup.
+
+---
+
+### 2. Activate the environment
+
+**Windows**
+
+```bash
+venv\Scripts\activate
+```
+
+**Mac/Linux**
+
+```bash
+source venv/bin/activate
+```
+
+After activation, your terminal will show:
+
+```
+(venv)
+```
+
+That means all installs now go inside the sandbox.
+
+---
+
+### 3. Install dependencies
+
+```bash
+pip install opencv-python mediapipe pygame numpy
+```
+
+---
+
+## 🎮 How to Play
+
+- Launch: Run `python main.py`
+- Setup: Position your hand clearly in the webcam view
+- Control: Move your hand or index finger upward to make the bird flap
+- Goal: Survive as long as possible by navigating through the pipes
+
+---
+
+## 🛠️ Technical Implementation
+
+The system monitors the **y-coordinate of the Index Finger Tip (Landmark 8)**. When a sudden upward velocity is detected:
+
+```
+Δy > threshold
+```
+
+the bird's vertical velocity is reset to a jump value, counteracting the constant gravity **g** applied in the game loop.
+
+---
+
+## 🤝 Contributing
+
+- Fork the Project
+- Create your Feature Branch
+- Commit your Changes
+- Open a Pull Request
+
+---
+
+
+
+
