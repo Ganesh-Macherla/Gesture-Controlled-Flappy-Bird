@@ -119,14 +119,6 @@ the bird's vertical velocity is reset to a jump value, counteracting the constan
 
 ---
 
-## 🤝 Contributing
-
-- Fork the Project
-- Create your Feature Branch
-- Commit your Changes
-- Open a Pull Request
-
----
 
 
 
