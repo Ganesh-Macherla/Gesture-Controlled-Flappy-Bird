@@ -246,4 +246,4 @@ It showcases how machine perception can replace traditional input devices in int
 
 ---
 
-I saw many applicaitons of hand tracking everywhere and i was like, "Cooool i wanna do that too"...and decided to combine it with Python-based game development to build a gesture controlled version of the classic game of flappy bird. Why? Because I have free will and i thought it would be cool to explore my boundaries with this one. Safe to safe it helped me build confidence in building cross domain systems and improved my understanding of real-time system designs in general.
+I saw many applicaitons of hand tracking everywhere and i was like, "Cooool i wanna do that too"...and decided to combine it with Python-based game development to build a gesture controlled version of the classic game of flappy bird. Why? Because I have free will and i thought it would be cool to explore my boundaries with this one. Safe to say it helped me build confidence in building cross domain systems and improved my understanding of real-time system designs in general.
