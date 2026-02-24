@@ -4,122 +4,246 @@
 ![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-red?style=for-the-badge&logo=opencv&logoColor=white)
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand%20Tracking-green?style=for-the-badge)
 
-This project is an interactive, computer-vision-based reimagining of the classic Flappy Bird game.
+An interactive computer-vision-based reimagining of the classic Flappy Bird game.
 
-By integrating **MediaPipe’s hand-tracking** with a physics-based game engine, it replaces traditional keyboard inputs with real-time gesture recognition. The tool serves as a practical demonstration of how **Human-Computer Interaction (HCI)** can be applied to gaming.
+This project integrates **MediaPipe hand tracking** with a physics-driven Pygame engine to replace traditional keyboard input with real-time gesture recognition. It demonstrates practical applications of **Human-Computer Interaction (HCI)** and real-time vision systems in gaming.
 
 ---
 
 ## 🚀 Key Features
 
-* 🖐️ Neural Gesture Mapping: Uses MediaPipe's 21-point hand landmark model to track movements with sub-millisecond latency.
-* ⚡ Real-time Control Pipeline: Processes webcam frames via OpenCV to trigger the "jump" mechanism instantly.
-* 🎮 Dynamic Physics Engine: Features simulated gravity and collision masks that respond to your physical movement.
-* 📈 Live Performance Overlay: Displays a diagnostic HUD showing hand tracking confidence and connection points.
+- 🖐️ Real-time hand tracking using MediaPipe’s 21-point landmark model  
+- 📷 Webcam frame processing via OpenCV  
+- 🎮 Physics-based movement system (gravity + velocity damping)  
+- 🎨 Animated sprite rendering using Pygame  
+- 🟢🟥 Dual pipe system with variable scoring  
+- 💀 Game state management (Start / Play / Game Over)  
+- ⌨️ Spacebar fallback control  
 
 ---
 
 ## 🧠 Core Technologies
 
-| Component | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Vision Engine** | **OpenCV** | Frame acquisition and image processing |
-| **Tracking Model**| **MediaPipe** | 3D Hand Landmark detection |
-| **Game Logic** | **Pygame** | Sprite management and physics |
-| **Environment** | **Python 3.11** | Optimized compatibility for ML libraries |
+| Component        | Technology     | Purpose |
+|------------------|---------------|----------|
+| Vision Engine    | OpenCV        | Frame capture & preprocessing |
+| Tracking Model   | MediaPipe     | Hand landmark detection |
+| Game Engine      | Pygame        | Rendering & physics |
+| Environment      | Python 3.11   | Stable compatibility for CV libraries |
 
 ---
 
-## ⚠️ Version Compatibility Note
+## 📂 Project Structure
 
-> **Important:** This project officially supports **Python 3.11**.
+```
+project/
+│
+├── birb.py            # Main game file
+├── camera.py          # Webcam test
+├── hand.py            # Hand detection test
+├── test_mp.py         # MediaPipe verification
+│
+└── assets/
+    ├── background-day.png
+    ├── background-night.png
+    ├── base.png
+    ├── gameover.png
+    ├── message.png
+    ├── pipe-green.png
+    ├── pipe-red.png
+    ├── yellowbird-downflap.png
+    ├── yellowbird-midflap.png
+    ├── yellowbird-upflap.png
+    ├── 0.png - 9.png
+```
 
-## ❓ Why Python 3.11?
+---
 
-As of early 2026, while Python 3.13 and 3.14 are out, many heavy-duty AI libraries like MediaPipe still recommend **3.9 to 3.11** for the most stable experience.
+## ⚠️ Version Compatibility
 
-This is because they rely on specific C++ bindings that take time to update for every new Python release.
+This project officially supports **Python 3.11**.
 
+While newer Python versions exist, MediaPipe and OpenCV currently provide the most stable experience within Python 3.9–3.11.
 
-If you encounter a `No matching distribution found` error, please ensure you are using a Python 3.11 virtual environment.
+If you encounter:
+
+```
+No matching distribution found
+```
+
+Ensure you are using Python 3.11 inside a virtual environment.
 
 ---
 
 ## ⚙️ Installation
 
-### Why use a virtual environment?
+### 1️⃣ Clone the repository
 
-A virtual environment is a **private sandbox Python installation** just for this project.
+```bash
+git clone https://github.com/yourusername/hand-flappy-bird.git
+cd hand-flappy-bird
+```
 
-It prevents package conflicts and keeps your system Python clean.  
-If anything breaks, you can simply delete the environment and recreate it.
-
----
-
-### 1. Create the environment
+### 2️⃣ Create a virtual environment
 
 ```bash
 python3.11 -m venv venv
 ```
 
-This creates a folder named `venv` containing an isolated Python setup.
-
----
-
-### 2. Activate the environment
+### 3️⃣ Activate the environment
 
 **Windows**
-
 ```bash
 venv\Scripts\activate
 ```
 
 **Mac/Linux**
-
 ```bash
 source venv/bin/activate
 ```
 
-After activation, your terminal will show:
-
-```
-(venv)
-```
-
-That means all installs now go inside the sandbox.
-
----
-
-### 3. Install dependencies
+### 4️⃣ Install dependencies
 
 ```bash
 pip install opencv-python mediapipe pygame numpy
 ```
 
+### 5️⃣ Run the game
+
+```bash
+python birb.py
+```
+
+Ensure:
+- Webcam is connected
+- `assets` folder is in the root directory
+
 ---
 
 ## 🎮 How to Play
 
-- Launch: Run `python main.py`
-- Setup: Position your hand clearly in the webcam view
-- Control: Move your hand or index finger upward to make the bird flap
-- Goal: Survive as long as possible by navigating through the pipes
+- Launch the game with `python birb.py`
+- Position your hand clearly in front of the webcam
+- Raise your hand upward to make the bird flap
+- Avoid colliding with pipes or the ground
+- Survive as long as possible to increase your score
 
 ---
 
-## 🛠️ Technical Implementation
+## 🖐 Gesture Control Logic
 
-The system monitors the **y-coordinate of the Index Finger Tip (Landmark 8)**. When a sudden upward velocity is detected:
+- MediaPipe detects 21 hand landmarks.
+- The **wrist landmark (index 0)** is monitored.
+- If the wrist’s normalized Y-coordinate is above the midpoint (y < 0.5), upward thrust is applied.
+- Otherwise, gravity pulls the bird downward.
 
+```python
+wrist = results.multi_hand_landmarks[0].landmark[0]
+if wrist.y < 0.5:
+    velocity += thrust
 ```
-Δy > threshold
-```
 
-the bird's vertical velocity is reset to a jump value, counteracting the constant gravity **g** applied in the game loop.
+This creates a natural mapping between physical hand elevation and in-game movement.
 
 ---
 
+## 🛠 Technical Implementation
 
+The game loop continuously:
 
+1. Captures webcam frames  
+2. Processes landmarks using MediaPipe  
+3. Applies physics updates (gravity + velocity decay)  
+4. Updates pipe positions  
+5. Performs collision detection  
+6. Renders sprites and score  
 
+Physics model:
 
+- Constant gravity acceleration  
+- Velocity damping factor  
+- Collision bounds checking  
+- Procedural pipe generation  
+
+---
+
+## 🎯 Scoring System
+
+- 🟢 Green Pipe → +10 points  
+- 🟥 Red Pipe → +20 points  
+
+Score increments when the bird successfully passes a pipe.
+
+---
+
+## 💀 Game States
+
+- `"start"` → Waiting for user input  
+- `"play"` → Active gameplay  
+- `"gameover"` → Display score + restart prompt  
+
+---
+
+## 🧪 Testing Modules
+
+Run components independently:
+
+### Test Camera
+```bash
+python camera.py
+```
+
+### Test Hand Tracking
+```bash
+python hand.py
+```
+
+### Test MediaPipe Installation
+```bash
+python test_mp.py
+```
+
+---
+
+## 🧠 Concepts Demonstrated
+
+- Real-time computer vision
+- Gesture-based interaction systems
+- Game loop architecture
+- Physics simulation
+- Sprite animation
+- Collision detection
+- Procedural obstacle spawning
+
+---
+
+## 🏁 Why This Project Matters
+
+This project demonstrates the integration of:
+
+- Computer Vision  
+- Real-time physics simulation  
+- Human-Computer Interaction  
+- Game development principles  
+
+It showcases how machine perception can replace traditional input devices in interactive systems.
+
+---
+
+## 📸 Gameplay Demo
+
+(add photo/video thingy here)
+
+---
+
+## 💡 Future Improvements
+
+- Add sound effects  
+- Adaptive difficulty scaling  
+- High score persistence  
+- More advanced gesture controls  
+- Performance optimization  
+
+---
+
+I saw many applicaitons of hand tracking everywhere and i was like, "Cooool i wanna do that too"...and decided to combine it with Python-based game development to build a gesture controlled version of the classic game of flappy bird. Why? Because I have free will and i thought it would be cool to explore my boundaries with this one. Safe to safe it helped me build confidence in building cross domain systems and improved my understanding of real-time system designs in general.
