@@ -4,6 +4,7 @@ import pygame
 import random
 import os
 
+
 ASSET = "assets"
 def load(name):
     return pygame.image.load(os.path.join(ASSET, name)).convert_alpha()
@@ -12,11 +13,11 @@ pygame.init()
 WIDTH, HEIGHT = 288, 512
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-
 bg = random.choice([load("background-day.png"), load("background-night.png")])
 base = load("base.png")
 gameover_img = load("gameover.png")
 message = load("message.png")
+
 
 bird_frames = [
     load("yellowbird-downflap.png"),
@@ -24,14 +25,13 @@ bird_frames = [
     load("yellowbird-upflap.png"),
 ]
 
+
 pipe_green = load("pipe-green.png")
 pipe_red = load("pipe-red.png")
 numbers = [load(f"{i}.png") for i in range(10)]
-
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 cap = cv2.VideoCapture(0)
-
 gravity = 0.45
 thrust = -0.6
 pipe_gap = 200
@@ -48,7 +48,6 @@ def draw_score(score):
     for d in digits:
         screen.blit(numbers[d], (x, 40))
         x += 24
-
 def new_pipe():
     color = random.choice(["green", "red"])
     img = pipe_green if color == "green" else pipe_red
@@ -56,11 +55,11 @@ def new_pipe():
     value = 10 if color == "green" else 20
     return [WIDTH, height, img, value]
 
+
 def reset():
     return HEIGHT//2, 0, [new_pipe()], 0
 
 bird_y, velocity, pipes, score = reset()
-
 running = True
 while running:
 
@@ -92,6 +91,7 @@ while running:
         if hand_up:
             velocity += thrust
 
+  
         velocity += gravity
         velocity *= 0.95
         bird_y += velocity
@@ -120,6 +120,8 @@ while running:
                 if bird_y < h or bird_y > h + pipe_gap:
                     state = "gameover"
 
+       
+        
         if bird_y > HEIGHT - 100 or bird_y < 0:
             state = "gameover"
 
@@ -136,7 +138,7 @@ while running:
     screen.blit(base, (base_x, HEIGHT - 100))
     screen.blit(base, (base_x + WIDTH, HEIGHT - 100))
 
-    # insert *u died*
+    # insert *u ded*
     if state == "gameover":
         screen.blit(gameover_img, (50, 200))
         draw_score(score)
@@ -149,7 +151,7 @@ while running:
             bird_y, velocity, pipes, score = reset()
             state = "start"
 
-    # event
+    #event
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -160,3 +162,4 @@ while running:
 
 cap.release()
 pygame.quit()
+
