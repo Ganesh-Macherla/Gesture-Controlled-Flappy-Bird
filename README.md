@@ -1,4 +1,4 @@
-# 🐦 Gesture-Controlled Flappy Bird
+#  Gesture-Controlled Flappy Bird
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-red?style=for-the-badge&logo=opencv&logoColor=white)
@@ -10,19 +10,19 @@ This project integrates **MediaPipe hand tracking** with a physics-driven Pygame
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
-- 🖐️ Real-time hand tracking using MediaPipe’s 21-point landmark model  
-- 📷 Webcam frame processing via OpenCV  
-- 🎮 Physics-based movement system (gravity + velocity damping)  
-- 🎨 Animated sprite rendering using Pygame  
-- 🟢🟥 Dual pipe system with variable scoring  
-- 💀 Game state management (Start / Play / Game Over)  
-- ⌨️ Spacebar fallback control  
+-  Real-time hand tracking using MediaPipe’s 21-point landmark model  
+-  Webcam frame processing via OpenCV  
+-  Physics-based movement system (gravity + velocity damping)  
+-  Animated sprite rendering using Pygame  
+-  Dual pipe system with variable scoring  
+-  Game state management (Start / Play / Game Over)  
+-  Spacebar fallback control  
 
 ---
 
-## 🧠 Core Technologies
+## Core Technologies
 
 | Component        | Technology     | Purpose |
 |------------------|---------------|----------|
@@ -33,7 +33,7 @@ This project integrates **MediaPipe hand tracking** with a physics-driven Pygame
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 project/
@@ -59,7 +59,7 @@ project/
 
 ---
 
-## ⚠️ Version Compatibility
+## Version Compatibility
 
 This project officially supports **Python 3.11**.
 
@@ -77,20 +77,20 @@ Ensure you are using Python 3.11 inside a virtual environment.
 
 ## ⚙️ Installation
 
-### 1️⃣ Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/yourusername/hand-flappy-bird.git
 cd hand-flappy-bird
 ```
 
-### 2️⃣ Create a virtual environment
+### Create a virtual environment
 
 ```bash
 python3.11 -m venv venv
 ```
 
-### 3️⃣ Activate the environment
+### Activate the environment
 
 **Windows**
 ```bash
@@ -102,13 +102,13 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 4️⃣ Install dependencies
+### Install dependencies
 
 ```bash
 pip install opencv-python mediapipe pygame numpy
 ```
 
-### 5️⃣ Run the game
+### Run the game
 
 ```bash
 python birb.py
@@ -120,7 +120,7 @@ Ensure:
 
 ---
 
-## 🎮 How to Play
+##  How to Play
 
 - Launch the game with `python birb.py`
 - Position your hand clearly in front of the webcam
@@ -130,7 +130,7 @@ Ensure:
 
 ---
 
-## 🖐 Gesture Control Logic
+##  Gesture Control Logic
 
 - MediaPipe detects 21 hand landmarks.
 - The **wrist landmark (index 0)** is monitored.
@@ -147,7 +147,7 @@ This creates a natural mapping between physical hand elevation and in-game movem
 
 ---
 
-## 🛠 Technical Implementation
+##  Technical Implementation
 
 The game loop continuously:
 
@@ -167,16 +167,16 @@ Physics model:
 
 ---
 
-## 🎯 Scoring System
+##  Scoring System
 
-- 🟢 Green Pipe → +10 points  
-- 🟥 Red Pipe → +20 points  
+-  Green Pipe → +10 points  
+-  Red Pipe → +20 points  
 
 Score increments when the bird successfully passes a pipe.
 
 ---
 
-## 💀 Game States
+## Game States
 
 - `"start"` → Waiting for user input  
 - `"play"` → Active gameplay  
@@ -184,7 +184,7 @@ Score increments when the bird successfully passes a pipe.
 
 ---
 
-## 🧪 Testing Modules
+## Testing Modules
 
 Run components independently:
 
@@ -205,7 +205,7 @@ python test_mp.py
 
 ---
 
-## 🧠 Concepts Demonstrated
+## Concepts Demonstrated
 
 - Real-time computer vision
 - Gesture-based interaction systems
@@ -217,7 +217,7 @@ python test_mp.py
 
 ---
 
-## 🏁 Why This Project Matters
+## Why This Project Matters
 
 This project demonstrates the integration of:
 
@@ -230,13 +230,13 @@ It showcases how machine perception can replace traditional input devices in int
 
 ---
 
-## 📸 Gameplay Demo
+## Gameplay Demo
 
 (add photo/video thingy here)
 
 ---
 
-## 💡 Future Improvements
+## Future Improvements
 
 - Add sound effects  
 - Adaptive difficulty scaling  
@@ -245,5 +245,7 @@ It showcases how machine perception can replace traditional input devices in int
 - Performance optimization  
 
 ---
+
+## Takeaway
 
 I saw many applicaitons of hand tracking everywhere and i was like, "Cooool i wanna do that too"...and decided to combine it with Python-based game development to build a gesture controlled version of the classic game of flappy bird. Why? Because I have free will and i thought it would be cool to explore my boundaries with this one. Safe to say it helped me build confidence in building cross domain systems and improved my understanding of real-time system designs in general.
