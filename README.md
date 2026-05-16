@@ -333,7 +333,9 @@ Potential future upgrades:
 
 # Gameplay Preview
 
-(Add gameplay screenshots or video here)
+![Basic sorting demo](media/demo.gif)
+
+[Watch the full 1-min demo here](media/output.mp4)
 
 ---
 
